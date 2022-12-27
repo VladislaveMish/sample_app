@@ -1,6 +1,7 @@
-require "test_helper"
+require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+
   def setup
     @user = User.new(name: "Example User", email: "user@example.com",
                      password: "foobar", password_confirmation: "foobar")
@@ -81,6 +82,35 @@ class UserTest < ActiveSupport::TestCase
     @user.microposts.create!(content: "Lorem ipsum")
     assert_difference 'Micropost.count', -1 do
       @user.destroy
+    end
+  end
+
+  test "should follow and unfollow a user" do
+    nazar = users(:nazar)
+    archer  = users(:archer)
+    assert_not nazar.following?(archer)
+    nazar.follow(archer)
+    assert nazar.following?(archer)
+    assert archer.followers.include?(nazar)
+    nazar.unfollow(archer)
+    assert_not nazar.following?(archer)
+  end
+
+  test "feed should have the right posts" do
+    nazar = users(:nazar)
+    archer  = users(:archer)
+    lana    = users(:lana)
+    # Сообщения читаемого пользователя.
+    lana.microposts.each do |post_following|
+      assert nazar.feed.include?(post_following)
+    end
+    # Собственные сообщения.
+    nazar.microposts.each do |post_self|
+      assert nazar.feed.include?(post_self)
+    end
+    # Сообщения нечитаемого пользователя.
+    archer.microposts.each do |post_unfollowed|
+      assert_not nazar.feed.include?(post_unfollowed)
     end
   end
 end

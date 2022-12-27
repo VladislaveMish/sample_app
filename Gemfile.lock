@@ -523,6 +523,7 @@ DEPENDENCIES
   coffee-rails
   debug
   faker
+  ffi
   fog
   guard-minitest
   importmap-rails

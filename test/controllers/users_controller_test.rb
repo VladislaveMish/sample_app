@@ -17,6 +17,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
+  test "should redirect update when not logged in" do
+    patch :update, params: {id: @user, user: { name: @user.name, email: @user.email } }
+    assert_not flash.empty?
+    assert_redirected_to login_url
+  end
+
   test "should redirect edit when logged in as wrong user" do
     log_in_as(@other_user)
     get :edit, params: { id: @user }
@@ -24,22 +30,16 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
-  test "should redirect index when not logged in" do
-    get :index
-    assert_redirected_to login_url
-  end
-
-  test "should redirect update when not logged in" do
-    patch :update, params: {id: @user, user: { name: @user.name, email: @user.email } }
-    assert_not flash.empty?
-    assert_redirected_to login_url
-  end
-
   test "should redirect update when logged in as wrong user" do
     log_in_as(@other_user)
     patch :update, params: { id: @user, user: { name: @user.name, email: @user.email } }
     assert flash.empty?
     assert_redirected_to root_url
+  end
+
+  test "should redirect index when not logged in" do
+    get :index
+    assert_redirected_to login_url
   end
 
   test "should redirect destroy when not logged in" do
@@ -64,5 +64,15 @@ class UsersControllerTest < ActionController::TestCase
                                             password_confirmation: '',
                                             admin: true } }
     assert_not @other_user.admin?
+  end
+
+  test "should redirect following when not logged in" do
+    get :following, params: { id: @user }
+    assert_redirected_to login_url
+  end
+
+  test "should redirect followers when not logged in" do
+    get :followers, params: { id: @user }
+    assert_redirected_to login_url
   end
 end

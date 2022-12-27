@@ -19,20 +19,18 @@ class ActiveSupport::TestCase
 
   def log_in_as(user, options = {})
     password    = options[:password]    || 'password'
-    remember_me = options[:remember_me] || '1'
+    remember_me = options[:remember_me] || '0'
     if integration_test?
-      post login_path, session: { email:       user.email,
+      post 'http://127.0.0.1:3000/login', params: { session: { email:       user.email,
                                   password:    password,
-                                  remember_me: remember_me }
+                                  remember_me: remember_me } }
     else
       session[:user_id] = user.id
     end
   end
 
-  private
-
-    # Возвращает true внутри интеграционных тестов
-    def integration_test?
-      defined?(post_via_redirect)
-    end
+  # Возвращает true внутри интеграционных тестов
+  def integration_test?
+    defined?(follow_redirect!)
+  end
 end

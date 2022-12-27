@@ -57,6 +57,14 @@ gem "jquery-rails"
 
 gem "turbolinks"
 
+gem 'rails-controller-testing'
+
+gem 'faker'
+
+gem 'will_paginate'
+
+gem 'bootstrap-will_paginate'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -78,7 +86,6 @@ group :test do
   gem "minitest-reporters"
   gem "mini_backtrace"
   gem "guard-minitest"
-  gem 'rails-controller-testing'
 end
 
 group :production do

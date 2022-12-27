@@ -6,6 +6,10 @@ ruby "3.1.2"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
 
+gem 'bcrypt'
+
+gem "bootstrap-sass"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -52,6 +56,14 @@ gem "coffee-rails"
 gem "jquery-rails"
 
 gem "turbolinks"
+
+gem 'rails-controller-testing'
+
+gem 'faker'
+
+gem 'will_paginate'
+
+gem 'bootstrap-will_paginate'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

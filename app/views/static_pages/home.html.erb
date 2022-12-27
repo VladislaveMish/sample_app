@@ -1,6 +1,8 @@
 <% provide(:title, "Home") %>
-<h1>Sample App</h1>
-<p>
-  This is the home page
-  (Не люблю рекламу)
-</p>
+<% if logged_in? %>
+  <div class="row">
+      <%= render 'static_pages/logged_in_render' %>
+  </div>
+<% else %>
+  <%= render 'static_pages/logged_out_render' %>
+<% end %>
